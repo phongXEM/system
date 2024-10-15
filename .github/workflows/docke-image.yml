@@ -34,4 +34,4 @@ jobs:
                       docker rm soc-system -f
                       docker rmi phongxem/next-system:1.0.0
                       docker pull phongxem/next-system:1.0.0
-                      docker run -dp 3100:3100 --name soc-system --network=crm-kingherbal --restart unless-stopped phongxem/next-system:1.0.0
+                      docker run -dp 3100:3100 --name soc-system --network=soc-system --restart unless-stopped phongxem/next-system:1.0.0
