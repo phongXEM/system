@@ -15,7 +15,7 @@ jobs:
             - name: Build docker Image
               run: docker build --progress=plain -t phongxem/next-system:0.1.0 .
             - name: Sign in to Docker Hub
-              run: docker login -u phong@xem.edu.vn -p Soc@051188
+              run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
             - name: Push Image to Docker Hub
               run: docker push phongxem/next-system:0.1.0
     deploy:
@@ -25,12 +25,12 @@ jobs:
             - name: Executing remote ssh command using password
               uses: appleboy/ssh-action@v1.0.3
               with:
-                  host: 103.162.21.132
-                  username: ubuntu
-                  password: Ing@%g35b1
+                  host: ${{ secrets.VPS_HOST }}
+                  username: ${{ secrets.VPS_USERNAME }}
+                  password: ${{ secrets.VPS_PASSWORD }}
                   port: 2405
                   script: |
-                      docker login -u phong@xem.edu.vn -p Soc@051188
+                      docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
                       docker rm soc-system -f
                       docker rmi phongxem/next-system:0.1.0
                       docker pull phongxem/next-system:0.1.0
