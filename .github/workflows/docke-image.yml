@@ -32,6 +32,6 @@ jobs:
                   script: |
                       docker login -u phong@xem.edu.vn -p Soc@051188
                       docker rm soc-system -f
-                      docker rmi phongxem/next-system:1.0.0
-                      docker pull phongxem/next-system:1.0.0
-                      docker run -dp 3100:3100 --name soc-system --network=soc-system --restart unless-stopped phongxem/next-system:1.0.0
+                      docker rmi phongxem/next-system:0.1.0
+                      docker pull phongxem/next-system:0.1.0
+                      docker run -dp 3100:3100 --name soc-system --network=soc-system --restart unless-stopped phongxem/next-system:0.1.0
