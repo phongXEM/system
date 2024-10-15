@@ -36,4 +36,4 @@ jobs:
                       docker pull phongxem/next-system:0.1.0
                       docker network rm soc-system
                       docker network create soc-system
-                      docker run -dp 3100:3100 --name soc-system --network=soc-system --restart unless-stopped phongxem/next-system:0.1.0
+                      docker run -dp 3000:3000 --name soc-system --network=soc-system --restart unless-stopped phongxem/next-system:0.1.0
