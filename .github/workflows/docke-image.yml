@@ -1,0 +1,37 @@
+name: CI/CD - SYSTEM
+
+on:
+    push:
+        branches: ['main']
+    pull_request:
+        branches: ['main']
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+            - name: Build docker Image
+              run: docker build --progress=plain -t phongxem/next-system:0.1.0 .
+            - name: Sign in to Docker Hub
+              run: docker login -u phong@xem.edu.vn -p !.8fKWz&2*PtAyc
+            - name: Push Image to Docker Hub
+              run: docker push phongxem/next-system:0.1.0
+    deploy:
+        runs-on: ubuntu-latest
+        needs: build
+        steps:
+            - name: Executing remote ssh command using password
+              uses: appleboy/ssh-action@v1.0.3
+              with:
+                  host: 103.162.21.132
+                  username: ubuntu
+                  password: Ing@%g35b1
+                  port: 2405
+                  script: |
+                      docker login -u phong@xem.edu.vn -p !.8fKWz&2*PtAyc
+                      docker rm soc-system -f
+                      docker rmi phongxem/next-system:1.0.0
+                      docker pull phongxem/next-system:1.0.0
+                      docker run -dp 3100:3100 --name soc-system --network=crm-kingherbal --restart unless-stopped phongxem/next-system:1.0.0
